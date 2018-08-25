@@ -33,10 +33,10 @@ public class MyFirstVerticleTest {
         socket.close();
 
         DeploymentOptions options = new DeploymentOptions()
-                .setConfig(new JsonObject().put("http.port", port));
+            .setConfig(new JsonObject().put("http.port", port));
 
         vertx.deployVerticle(MyFirstVerticle.class.getName(), options,
-                context.asyncAssertSuccess());
+            context.asyncAssertSuccess());
     }
 
     @After
@@ -49,11 +49,11 @@ public class MyFirstVerticleTest {
         final Async async = context.async();
 
         vertx.createHttpClient().getNow(port, "localhost", "/",
-                httpClientResponse -> {
-                    httpClientResponse.handler(body -> {
-                        context.assertTrue(body.toString().contains("Hello"));
-                        async.complete();
-                    });
+            httpClientResponse -> {
+                httpClientResponse.handler(body -> {
+                    context.assertTrue(body.toString().contains("Hello"));
+                    async.complete();
                 });
+            });
     }
 }

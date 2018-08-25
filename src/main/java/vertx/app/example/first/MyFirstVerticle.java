@@ -16,12 +16,16 @@ public class MyFirstVerticle extends AbstractVerticle {
                     r.response().end("<h1>Hello from my first " +
                             "Vert.x 3 application</h1>");
                 })
-                .listen(8080, httpServerAsyncResult -> {
-                    if (httpServerAsyncResult.succeeded()) {
-                        future.complete();
-                    } else {
-                        future.fail(httpServerAsyncResult.cause());
-                    }
-                });
+                .listen(
+                        // Retrieve the port from the configuration,
+                        // default to 8080.
+                        config().getInteger("http.port", 8080),
+                        httpServerAsyncResult -> {
+                            if (httpServerAsyncResult.succeeded()) {
+                                future.complete();
+                            } else {
+                                future.fail(httpServerAsyncResult.cause());
+                            }
+                        });
     }
 }
